@@ -1,7 +1,7 @@
 import numpy as np
 import random
 from flask import Flask, render_template, jsonify, request
-
+from rvaapp.models import *
 from .utils import *
 
 app = Flask(__name__)
@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 sof = load_data_init(app.config['DATAFLIGHT'])
+mdp = ModelePred(app.config['MODELE'],app.config['SCALER'])#modele de prediction
 
 @app.route('/')
 @app.route('/index/')
@@ -97,8 +98,8 @@ def pred():
 
 	dataf = creat_dataframe(app.config['STRUCT'])
 	dataf = fill_df(dataf,app.config['DH'] , ca_val, city_or, aero_or, date_or, time_or, city_ar, aero_ar, time_ar)
-
-	retard = 3
+	retard = mdp.prediction(dataf)
+	retard = np.append(retard,0)
 
 	return render_template('pred.html', ca_val = COMP_AER[ca_val], ct_or_val = city_or , ae_or_val = aero_or, date_or_val = date_or, time_or_val = time_or, 
-		ct_ar_val = city_ar, ae_ar_val = aero_ar, date_ar_val = date_ar, time_ar_val = time_ar, retard = retard) 
+		ct_ar_val = city_ar, ae_ar_val = aero_ar, date_ar_val = date_ar, time_ar_val = time_ar, retard = int(np.max(retard))) 

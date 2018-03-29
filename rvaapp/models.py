@@ -1,6 +1,10 @@
 # coding: utf-8
 import pandas as pd
 import numpy as np
+from sklearn import preprocessing
+from sklearn.externals import joblib
+from sklearn.linear_model import SGDRegressor
+from sklearn.model_selection import GridSearchCV
 
 class SetOfPlace:
 	def __init__(self, name):
@@ -45,3 +49,13 @@ class SetOfPlace:
 		aeroport_dest = aeroport.DEST.unique()
 		return np.sort(aeroport_dest)
 
+class ModelePred:
+	"""docstring for modele"""
+	def __init__(self, modele_file, scaler_file):
+		self.modele = joblib.load(modele_file) 
+		self.scaler = joblib.load(scaler_file) 
+
+	def prediction(self, data):
+		data_sc = self.scaler.transform(data)
+		pred = self.modele.predict(data_sc)
+		return pred

@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/av1.png') }}" />
+    <title>Information sur le vol</title>
+</head>
+<body>
+
+	<h1 align="center"> Information sur le vol </h1>
+
+	<div>
+	<fieldset>
+		<legend > <h2>Compagnie Aerienne</h2> </legend> 
+		
+		<form method="post" action="/info/">
+		   <p>
+		       <label for="ca">Quel est votre compagnie aerienne ?</label>
+		       <select name="ca" id="ca">
+			    	{% for cle , valeur in ca_dict.items() %}
+				    	{% if cle == ca_val %}
+				    		<option value="{{ cle }}" selected>{{ valeur }}   ( {{ cle }} )</option>
+				    	{% else %}
+			        		<option value="{{ cle }}">{{ valeur }}   ( {{ cle }} )</option>
+			        	{% endif %}
+		    		{% endfor %}
+		       </select>
+		   </p >
+		   <p align="center">
+		   	<input type="hidden" name = "step" value= 1 />
+		   	<input type="submit" value= "{% if ca_val  %} Modifier {% else %} Confirmer {% endif %}" />
+
+		   </p>
+		</form>
+	</fieldset>
+	</div>
+
+	{% if ca_val  %}
+	<div>
+		<fieldset>
+			<legend><h2>Aéroport de départ</h2></legend>
+
+			<form method="post" action="/info/">
+				<label for="st_or">Dans quel état est votre aéroport ?</label>
+				<select name="st_or" id="st_or">
+					{% for st in st_or_list %}
+						{% if st == st_or_val %}
+							<option value="{{ st }}" selected>{{ st }}</option>
+						{% else %}
+							<option value="{{ st }}">{{ st }}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+				<input type="hidden" name = "ca" value= "{{ ca_val }}" />
+				<input type="hidden" name = "step" value= 2 />
+				<input type="submit" value= "{% if step_val > 1  %} Modifier {% else %} Confirmer {% endif %}" />
+				<br/>
+			</form>
+			{% if step_val > 1 %}
+			<form method="post" action="/info/">
+				<label for="ct_or">Dans quelle ville est votre aéroport ?</label>
+				<select name="ct_or" id="ct_or">
+					{% for ct in ct_or_list %}
+						{% if ct == ct_or_val %}
+							<option value="{{ ct }}" selected>{{ ct }}</option>
+						{% else %}
+							<option value="{{ ct }}">{{ ct }}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+				<input type="hidden" name = "step" value= 3 />
+				<input type="hidden" name = "ca" value= "{{ ca_val }}" />
+				<input type="hidden" name = "st_or" value= "{{ st_or_val }}" />
+				<input type="submit" value= "{% if step_val > 2  %} Modifier {% else %} Confirmer {% endif %}" />
+			</form>
+			{% endif %}
+
+			{% if step_val > 2 %}
+				<form method="post" action="/info/">
+					<label for="ae_or">Sélectionnez votre aéroport :</label>
+					<select name="ae_or" id="ae_or">
+						{% for ae in ae_or_list %}
+							{% if ae == ae_or_val %}
+								<option value="{{ ae }}" selected>{{ ae }}</option>
+							{% else %}
+								<option value="{{ ae }}">{{ ae }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+					<input type="hidden" name = "step" value= 4 />
+					<input type="hidden" name = "ca" value= "{{ ca_val }}" />
+					<input type="hidden" name = "st_or" value= "{{ st_or_val }}" />
+					<input type="hidden" name = "ct_or" value= "{{ ct_or_val }}" />
+					<input type="submit" value= "{% if step_val > 3  %} Modifier {% else %} Confirmer {% endif %}" />
+				</form>
+			{% endif %}
+
+			<br/>
+			{% if step_val > 3 %}
+				<form method="post" action="/info/">
+					<label for="date_or">Indiquez le jour de départ :</label>
+					<input type="date" name = "date_or" value = "{{ date_or_val }}"/><br/>
+					<label for="time_or">Indiquez l'heure de l'embarquement :</label>
+					<input type="time" name = "time_or" value = "{{ time_or_val }}"/><br/>
+
+					<input type="hidden" name = "step" value= 5 />
+					<input type="hidden" name = "ca" value= "{{ ca_val }}" />
+					<input type="hidden" name = "st_or" value= "{{ st_or_val }}" />
+					<input type="hidden" name = "ct_or" value= "{{ ct_or_val }}" />
+					<input type="hidden" name = "ae_or" value= "{{ ae_or_val }}" />
+					<input type="submit" value= "{% if step_val > 4  %} Modifier {% else %} Confirmer {% endif %}" />
+				</form>
+			{% endif %}
+		</fieldset>
+	</div>
+	{% endif %}
+	{% if dt_not_valide  %}
+		<p><h2> Veillez à bien indiquer une date et une heure de départ</h2></p>
+	{% endif %}
+	{% if step_val > 4  %}
+		<div>
+		<fieldset>
+			<legend><h2>Aéroport d'arrivée</h2></legend>
+
+			<form method="post" action="/info/">
+				<label for="st_ar">Dans quel état est votre aéroport ?</label>
+				<select name="st_ar" id="st_ar">
+					{% for sta in st_ar_list %}
+						{% if sta == st_ar_val %}
+							<option value="{{ sta }}" selected>{{ sta }}</option>
+						{% else %}
+							<option value="{{ sta }}">{{ sta }}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+				<input type="hidden" name = "step" value= 6 />
+				<input type="hidden" name = "ca" value= "{{ ca_val }}" />
+				<input type="hidden" name = "st_or" value= "{{ st_or_val }}" />
+				<input type="hidden" name = "ct_or" value= "{{ ct_or_val }}" />
+				<input type="hidden" name = "ae_or" value= "{{ ae_or_val }}" />
+				<input type="hidden" name = "date_or" value= "{{ date_or_val }}" />
+				<input type="hidden" name = "time_or" value= "{{ time_or_val }}" />
+				<input type="submit" value= "{% if step_val > 5  %} Modifier {% else %} Confirmer {% endif %}" />
+				<br/>
+			</form>
+
+			{% if step_val > 5 %}
+			<form method="post" action="/info/">
+				<label for="ct_ar">Dans quelle ville est votre aéroport ?</label>
+				<select name="ct_ar" id="ct_ar">
+					{% for ct in ct_ar_list %}
+						{% if ct == ct_ar_val %}
+							<option value="{{ ct }}" selected>{{ ct }}</option>
+						{% else %}
+							<option value="{{ ct }}">{{ ct }}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+				<input type="hidden" name = "step" value= 7 />
+				<input type="hidden" name = "ca" value= "{{ ca_val }}" />
+				<input type="hidden" name = "st_or" value= "{{ st_or_val }}" />
+				<input type="hidden" name = "ct_or" value= "{{ ct_or_val }}" />
+				<input type="hidden" name = "ae_or" value= "{{ ae_or_val }}" />
+				<input type="hidden" name = "date_or" value= "{{ date_or_val }}" />
+				<input type="hidden" name = "time_or" value= "{{ time_or_val }}" />
+				<input type="hidden" name = "st_ar" value= "{{ st_ar_val }}" />
+				<input type="submit" value= "{% if step_val > 6  %} Modifier {% else %} Confirmer {% endif %}" />
+			</form>
+			{% endif %}
+
+			{% if step_val > 6 %}
+				<form method="post" action="/info/">
+					<label for="ae_ar">Sélectionnez votre aéroport :</label>
+					<select name="ae_ar" id="ae_ar">
+						{% for ae in ae_ar_list %}
+							{% if ae == ae_ar_val %}
+								<option value="{{ ae }}" selected>{{ ae }}</option>
+							{% else %}
+								<option value="{{ ae }}">{{ ae }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+					<input type="hidden" name = "step" value= 8 />
+					<input type="hidden" name = "ca" value= "{{ ca_val }}" />
+					<input type="hidden" name = "st_or" value= "{{ st_or_val }}" />
+					<input type="hidden" name = "ct_or" value= "{{ ct_or_val }}" />
+					<input type="hidden" name = "ae_or" value= "{{ ae_or_val }}" />
+					<input type="hidden" name = "date_or" value= "{{ date_or_val }}" />
+					<input type="hidden" name = "time_or" value= "{{ time_or_val }}" />
+					<input type="hidden" name = "st_ar" value= "{{ st_ar_val }}" />
+					<input type="hidden" name = "ct_ar" value= "{{ ct_ar_val }}" />
+					<input type="submit" value= "{% if step_val > 7  %} Modifier {% else %} Confirmer {% endif %}" />
+				</form>
+			{% endif %}
+
+			{% if step_val > 7 %}
+				<form method="post" action="/pred/">
+					<label for="date_ar">Indiquez le jour de d'arrivée :</label>
+					<input type="date" name = "date_ar" value = "{{ date_or_val }}"/><br/>
+					<label for="time_ar">Indiquez l'heure prevue d'arrivée :</label>
+					<input type="time" name = "time_ar" value = "{{ time_or_val }}"/><br/>
+					<input type="hidden" name = "step" value= 9 />
+					<input type="hidden" name = "ca" value= "{{ ca_val }}" />
+					<input type="hidden" name = "st_or" value= "{{ st_or_val }}" />
+					<input type="hidden" name = "ct_or" value= "{{ ct_or_val }}" />
+					<input type="hidden" name = "ae_or" value= "{{ ae_or_val }}" />
+					<input type="hidden" name = "date_or" value= "{{ date_or_val }}" />
+					<input type="hidden" name = "time_or" value= "{{ time_or_val }}" />
+					<input type="hidden" name = "st_ar" value= "{{ st_ar_val }}" />
+					<input type="hidden" name = "ct_ar" value= "{{ ct_ar_val }}" />
+					<input type="hidden" name = "ae_ar" value= "{{ ae_ar_val }}" />
+					<p align="center" >
+						<input type="submit" value= "Valider" id="bt" />
+					</p>
+				</form>
+			{% endif %}
+
+		</fieldset>
+	</div>
+	{% endif %}
+
+</body>
+</html>
+

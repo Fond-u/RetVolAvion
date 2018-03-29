@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/av1.png') }}" />
+    <title>Estimation du retard</title>
+</head>
+<body>
+	<h1 align="center"> Résumé de votre vol </h1>
+
+	<fieldset>
+		<legend > <h2>Votre Billet</h2> </legend> 
+
+		<form method="GET" action="/info/">
+			<p>
+				Compagnie aérienne : {{ ca_val }} <br/>
+				Départ :   {{ ct_or_val }}, {{ ae_or_val }} le {{ date_or_val}} à {{ time_or_val }}<br/>
+				Arrivée :   {{ ct_ar_val }}, {{ ae_ar_val }} le {{ date_ar_val }} à {{ time_ar_val }}<br/>
+			</p>
+			<p align="right">
+				<input type="submit" value= "Modifier" />
+			</p>
+		</form>
+	</fieldset>
+
+	<h1 align="center"> Estimation du retard </h1>
+
+	<fieldset>
+			<p align="center">
+				Si votre vol subit un retard, il est estimé a {{retard}} min 
+			</p>
+	</fieldset>
+
+</body>
+</html>

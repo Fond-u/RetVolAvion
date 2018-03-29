@@ -1,0 +1,19 @@
+fieldset
+{
+  background-color:rgb(230,230,230);
+  border:1.5px solid blue;
+  border-radius:8px;	
+  max-width:800px;
+  padding:16px;	
+  margin-left:80px;
+  margin-bottom:30px; 
+}
+
+.bt
+{
+	width:100px;
+   	height:50px;
+   	font-size:20px;
+   	line-height:50px;
+   	text-align:center; 
+}

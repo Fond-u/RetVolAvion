@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/av1.png') }}" />
+    <title>Binvenue</title>
+</head>
+<body>
+
+	<h1 align="center"> Bienvenue sur l'API d'anticipation de retard de vol d'avions </h1>
+
+	<div> 
+		<p>Cette API traite les vols interne sur le territoire Americain</p>
+		<p> </p>
+		<form method="get" action="/info/">
+			<label for="start">Munissez-vous de votre billet d'avion et clickez sur commencer : </label>
+	      	<input type="submit" value="Commencer" />
+		</form>
+	</div>
+
+</body>
+</html>
+
+

@@ -13,11 +13,11 @@
 
 	<div>
 	<fieldset>
-		<legend > <h2>Compagnie Aerienne</h2> </legend> 
+		<legend > <h2>Compagnie Aérienne</h2> </legend> 
 		
 		<form method="post" action="/info/">
 		   <p>
-		       <label for="ca">Quel est votre compagnie aerienne ?</label>
+		       <label for="ca">Quel est votre compagnie aérienne ?</label>
 		       <select name="ca" id="ca">
 			    	{% for cle , valeur in ca_dict.items() %}
 				    	{% if cle == ca_val %}
@@ -43,7 +43,7 @@
 			<legend><h2>Aéroport de départ</h2></legend>
 
 			<form method="post" action="/info/">
-				<label for="st_or">Dans quel état est votre aéroport ?</label>
+				<label for="st_or">Dans quel Etat se trouve votre aéroport ?</label>
 				<select name="st_or" id="st_or">
 					{% for st in st_or_list %}
 						{% if st == st_or_val %}
@@ -60,7 +60,7 @@
 			</form>
 			{% if step_val > 1 %}
 			<form method="post" action="/info/">
-				<label for="ct_or">Dans quelle ville est votre aéroport ?</label>
+				<label for="ct_or">Dans quelle ville se trouve votre aéroport ?</label>
 				<select name="ct_or" id="ct_or">
 					{% for ct in ct_or_list %}
 						{% if ct == ct_or_val %}
@@ -102,7 +102,7 @@
 				<form method="post" action="/info/">
 					<label for="date_or">Indiquez le jour de départ :</label>
 					<input type="date" name = "date_or" value = "{{ date_or_val }}"/><br/>
-					<label for="time_or">Indiquez l'heure de l'embarquement :</label>
+					<label for="time_or">Indiquez l'heure d'embarquement :</label>
 					<input type="time" name = "time_or" value = "{{ time_or_val }}"/><br/>
 
 					<input type="hidden" name = "step" value= 5 />
@@ -125,7 +125,7 @@
 			<legend><h2>Aéroport d'arrivée</h2></legend>
 
 			<form method="post" action="/info/">
-				<label for="st_ar">Dans quel état est votre aéroport ?</label>
+				<label for="st_ar">Dans quel Etat se trouve votre aéroport ?</label>
 				<select name="st_ar" id="st_ar">
 					{% for sta in st_ar_list %}
 						{% if sta == st_ar_val %}
@@ -148,7 +148,7 @@
 
 			{% if step_val > 5 %}
 			<form method="post" action="/info/">
-				<label for="ct_ar">Dans quelle ville est votre aéroport ?</label>
+				<label for="ct_ar">Dans quelle ville se trouve votre aéroport ?</label>
 				<select name="ct_ar" id="ct_ar">
 					{% for ct in ct_ar_list %}
 						{% if ct == ct_ar_val %}
@@ -197,7 +197,7 @@
 
 			{% if step_val > 7 %}
 				<form method="post" action="/pred/">
-					<label for="date_ar">Indiquez le jour de d'arrivée :</label>
+					<label for="date_ar">Indiquez le jour d'arrivée :</label>
 					<input type="date" name = "date_ar" value = "{{ date_or_val }}"/><br/>
 					<label for="time_ar">Indiquez l'heure prevue d'arrivée :</label>
 					<input type="time" name = "time_ar" value = "{{ time_or_val }}"/><br/>
